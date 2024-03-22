@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Rebus.Retry;
 
@@ -13,4 +14,13 @@ public interface IExceptionInfoFactory
     /// <param name="exception">Source exception.</param>
     /// <returns>An <see cref="ExceptionInfo"/> containing information from the supplied exception.</returns>
     ExceptionInfo CreateInfo(Exception exception);
+
+    /// <summary>
+    /// Create an <see cref="ExceptionInfo"/> from a collection of exception infos.
+    /// </summary>
+    /// <param name="exceptionInfos">Collection of exception infos</param>
+    /// <param name="message">Message</param>
+    /// <param name="details">Details</param>
+    /// <returns></returns>
+    ExceptionInfo CreateInfo(IEnumerable<ExceptionInfo> exceptionInfos, string message, string details);
 }

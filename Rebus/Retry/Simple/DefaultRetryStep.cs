@@ -206,14 +206,13 @@ public class DefaultRetryStep : IRetryStep
         await scope.CompleteAsync();
     }
 
-    static ExceptionInfo GetAggregateException(IEnumerable<ExceptionInfo> exceptions)
+    ExceptionInfo GetAggregateException(IEnumerable<ExceptionInfo> exceptions)
     {
         var list = exceptions.ToList();
 
-        return new(typeof(AggregateException).GetSimpleAssemblyQualifiedName(),
+        return _exceptionInfoFactory.CreateInfo(list,
             $"{list.Count} unhandled exceptions",
-            string.Join(Environment.NewLine + Environment.NewLine, list.Select(e => e.GetFullErrorDescription())),
-            DateTimeOffset.Now
+            string.Join(Environment.NewLine + Environment.NewLine, list.Select(e => e.GetFullErrorDescription()))
         );
     }
 }
